@@ -304,8 +304,8 @@ export async function GET(
             <ResumePDF sections={sections} basicInfo={basicInfo} />
         );
 
-        // Return PDF
-        return new NextResponse(pdfBuffer, {
+        // Return PDF - Convert Buffer to Uint8Array for NextResponse
+        return new NextResponse(new Uint8Array(pdfBuffer), {
             headers: {
                 'Content-Type': 'application/pdf',
                 'Content-Disposition': `attachment; filename="resume-${id}.pdf"`,
