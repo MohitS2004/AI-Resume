@@ -34,14 +34,8 @@ function GeneratePageContent() {
     const searchParams = useSearchParams();
     const [jobDescription, setJobDescription] = useState('');
     const [loading, setLoading] = useState(false);
-    const [jobId, setJobId] = useState<string | null>(null);
+    const [jobId, setJobId] = useState<string | null>(() => searchParams?.get('jobId') || null);
     const [job, setJob] = useState<ResumeJob | null>(null);
-
-    // Get jobId from searchParams on mount
-    useEffect(() => {
-        const id = searchParams?.get('jobId');
-        if (id) setJobId(id);
-    }, [searchParams]);
 
     // Poll for job status
     useEffect(() => {
