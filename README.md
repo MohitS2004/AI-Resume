@@ -1,6 +1,6 @@
 # AI Resume Builder
 
-An AI-powered resume builder that generates tailored, ATS-optimized resumes based on job descriptions.
+An AI-powered resume builder that generates tailored, ATS-optimized resumes based on job descriptions with LaTeX export.
 
 ## Tech Stack
 
