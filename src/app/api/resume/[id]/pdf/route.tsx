@@ -6,7 +6,8 @@ import {
     Text,
     View,
     StyleSheet,
-    renderToBuffer
+    renderToBuffer,
+    Link
 } from '@react-pdf/renderer';
 import { ResumeSections, BasicInfo } from '@/types';
 
@@ -95,6 +96,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 11,
     },
+    projectLink: {
+        fontWeight: 'bold',
+        fontSize: 11,
+        color: '#2563eb',
+        textDecoration: 'none',
+    },
     projectDesc: {
         fontSize: 9,
         color: '#4b5563',
@@ -119,6 +126,12 @@ const styles = StyleSheet.create({
     gpa: {
         fontSize: 9,
         color: '#6b7280',
+    },
+    coursework: {
+        fontSize: 9,
+        color: '#4b5563',
+        marginTop: 2,
+        lineHeight: 1.3,
     },
     skillCategory: {
         flexDirection: 'row',
@@ -151,6 +164,7 @@ function ResumePDF({ sections, basicInfo }: { sections: ResumeSections; basicInf
                             {basicInfo.location && <Text>{basicInfo.location}</Text>}
                             {basicInfo.linkedin && <Text>{basicInfo.linkedin}</Text>}
                             {basicInfo.github && <Text>{basicInfo.github}</Text>}
+                            {basicInfo.portfolio && <Text>{basicInfo.portfolio}</Text>}
                         </View>
                     </View>
                 )}
@@ -193,9 +207,15 @@ function ResumePDF({ sections, basicInfo }: { sections: ResumeSections; basicInf
                         <Text style={styles.sectionTitle}>Projects</Text>
                         {sections.projects.map((proj) => (
                             <View key={proj.id} style={styles.projectItem}>
-                                <Text style={styles.projectName}>{proj.name}</Text>
-                                <Text style={styles.projectDesc}>{proj.description}</Text>
-                                <Text style={styles.techStack}>Tech: {proj.technologies.join(', ')}</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                                    <Text style={styles.projectName}>{proj.name}</Text>
+                                    {proj.link && (
+                                        <Link src={proj.link.startsWith('http') ? proj.link : `https://${proj.link}`} style={styles.projectLink}>
+                                            (Live Link)
+                                        </Link>
+                                    )}
+                                    <Text style={styles.techStack}>{proj.technologies.join(', ')}</Text>
+                                </View>
                                 {proj.bullets.map((bullet, i) => (
                                     <View key={i} style={styles.bullet}>
                                         <Text style={styles.bulletPoint}>•</Text>
@@ -221,6 +241,9 @@ function ResumePDF({ sections, basicInfo }: { sections: ResumeSections; basicInf
                                     </View>
                                     <Text style={styles.date}>{edu.startDate} - {edu.endDate}</Text>
                                 </View>
+                                {edu.coursework && (
+                                    <Text style={styles.coursework}>Relevant Coursework: {edu.coursework}</Text>
+                                )}
                             </View>
                         ))}
                     </View>

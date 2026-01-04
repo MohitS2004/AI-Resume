@@ -6,6 +6,7 @@ export interface BasicInfo {
     linkedin: string;
     github: string;
     location: string;
+    portfolio?: string;
 }
 
 export interface Education {
@@ -16,6 +17,7 @@ export interface Education {
     startDate: string;
     endDate: string;
     gpa?: string;
+    coursework?: string;
     highlights: string[];
 }
 
@@ -97,6 +99,7 @@ export interface GeneratedEducation {
     startDate: string;
     endDate: string;
     gpa?: string;
+    coursework?: string;
     highlights: string[];
 }
 

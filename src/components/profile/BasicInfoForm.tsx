@@ -3,7 +3,7 @@
 import { BasicInfo } from '@/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { User, Mail, Phone, Linkedin, Github, MapPin } from 'lucide-react';
+import { User, Mail, Phone, Linkedin, Github, MapPin, Globe } from 'lucide-react';
 
 interface BasicInfoFormProps {
     value: BasicInfo;
@@ -98,6 +98,19 @@ export function BasicInfoForm({ value, onChange }: BasicInfoFormProps) {
                         placeholder="github.com/johndoe"
                         value={value.github}
                         onChange={(e) => updateField('github', e.target.value)}
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="portfolio" className="flex items-center gap-2">
+                        <Globe className="w-4 h-4 text-muted-foreground" />
+                        Portfolio Website
+                    </Label>
+                    <Input
+                        id="portfolio"
+                        placeholder="johndoe.com"
+                        value={value.portfolio || ''}
+                        onChange={(e) => updateField('portfolio', e.target.value)}
                     />
                 </div>
             </div>

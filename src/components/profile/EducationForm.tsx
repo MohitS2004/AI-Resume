@@ -21,6 +21,7 @@ const emptyEducation: Omit<Education, 'id'> = {
     startDate: '',
     endDate: '',
     gpa: '',
+    coursework: '',
     highlights: [],
 };
 
@@ -133,6 +134,19 @@ export function EducationForm({ value, onChange }: EducationFormProps) {
                                             onChange={(e) => updateEducation(edu.id, 'endDate', e.target.value)}
                                         />
                                     </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label>Relevant Coursework (optional)</Label>
+                                    <Textarea
+                                        placeholder="Data Structures, Algorithms, Machine Learning, Database Systems, Cloud Computing"
+                                        value={edu.coursework || ''}
+                                        onChange={(e) => updateEducation(edu.id, 'coursework', e.target.value)}
+                                        className="min-h-[60px]"
+                                    />
+                                    <p className="text-xs text-muted-foreground">
+                                        Comma-separated list. Use to incorporate keywords not covered in experience/projects. Max 2 lines in PDF.
+                                    </p>
                                 </div>
 
                                 <div className="space-y-2">

@@ -1,9 +1,8 @@
 import { createServerSupabaseClient } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
-import { ResumePreview } from '@/components/resume/ResumePreview';
-import { ReviewFeedback } from '@/components/resume/ReviewFeedback';
+import { ResumeEditor } from '@/components/resume/ResumeEditor';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 async function getResumeJob(id: string) {
@@ -58,49 +57,28 @@ export default async function ResumePage({ params }: { params: { id: string } })
     const { job, profile } = result;
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 animate-fade-in">
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div className="flex items-center gap-4">
-                    <Link href="/generate">
-                        <Button variant="ghost" size="icon">
-                            <ArrowLeft className="w-5 h-5" />
-                        </Button>
-                    </Link>
-                    <div>
-                        <h1 className="text-2xl lg:text-3xl font-bold">
-                            {job.jdAnalysis?.jobTitle || 'Generated Resume'}
-                        </h1>
-                        <p className="text-muted-foreground mt-1">
-                            {job.jdAnalysis?.company || 'Resume Preview'}
-                        </p>
-                    </div>
-                </div>
-                <div className="flex gap-3">
-                    <Link href={`/api/resume/${job.id}/pdf`} target="_blank">
-                        <Button>
-                            <Download className="w-4 h-4 mr-2" />
-                            Download PDF
-                        </Button>
-                    </Link>
+        <div className="max-w-[1600px] mx-auto space-y-4 animate-fade-in p-4 lg:p-6">
+            <div className="flex items-center gap-4 mb-2">
+                <Link href="/generate">
+                    <Button variant="ghost" size="icon">
+                        <ArrowLeft className="w-5 h-5" />
+                    </Button>
+                </Link>
+                <div>
+                    <h1 className="text-xl font-bold">
+                        {job.jdAnalysis?.jobTitle || 'Resume Editor'}
+                    </h1>
+                    <p className="text-sm text-muted-foreground">
+                        {job.jdAnalysis?.company || 'Editing Mode'}
+                    </p>
                 </div>
             </div>
 
-            {/* Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Resume Preview - Takes 2 columns */}
-                <div className="lg:col-span-2">
-                    <ResumePreview
-                        sections={job.finalResume}
-                        basicInfo={profile?.basicInfo}
-                    />
-                </div>
-
-                {/* Feedback Panel */}
-                <div className="lg:col-span-1">
-                    <ReviewFeedback feedback={job.reviewFeedback} />
-                </div>
-            </div>
+            <ResumeEditor
+                jobId={job.id}
+                initialSections={job.finalResume || job.sections as any}
+                profile={profile ? profile.basicInfo : null}
+            />
         </div>
     );
 }
