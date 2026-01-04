@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 const steps = [
     { id: 'analyzing_jd', label: 'Analyzing JD', icon: Search },
     { id: 'generating', label: 'Generating', icon: Cpu },
